@@ -1,0 +1,13 @@
+.PopupTable{
+  display: flex;
+}
+
+input{
+  width: 100%;
+  border: none;
+  text-align: center;
+}
+
+.first-input{
+  text-align: left;
+}
