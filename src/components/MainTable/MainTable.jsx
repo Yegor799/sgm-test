@@ -7,20 +7,44 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { data } from '../../data';
+import { useState, useEffect } from 'react';
 
 
+const MainTable = () => {   
 
-const MainTable = () => { 
+  const [cell, setCell] = useState(null);
+  const [receivedData, setReceivedData] = useState(null);  
+  
+  window.addEventListener('message', evt => {
+    setReceivedData(evt.data)
+  });  
+  
+  useEffect(() => {
+      
+    if (!receivedData) {
+      return
+    }
+
+    const { value, date, user, comment } = receivedData;
+    if (cell) {
+      cell.innerText = `${value} ${date} ${user} ${comment}`
+    }
+    
+  }, [cell, receivedData])
+  
 
   const handleClick = (e) => {
     e.preventDefault();
 
-    if (!parseInt(e.target.innerText)) {
+    if (e.target.localName !== "td") {
       return
     }
+
+    setCell(e.target);
     
-    window.open('popup', 'jjjj', 'popup');    
+    const newWindow = window.open('popup', 'popup', 'popup');
   }
+  
 
   return (
     <Paper sx={{ width: '100%' }}>
@@ -29,23 +53,27 @@ const MainTable = () => {
           <TableHead>
             <TableRow>
               <TableCell sx={{ width: '10%' }}></TableCell>
-              <TableCell colSpan="3" align='center'>2017</TableCell>
-              <TableCell colSpan="3" align='center'>2018</TableCell>
-              <TableCell colSpan="3" align='center'>2019</TableCell>
+              <TableCell colSpan="4" align='center'>2017</TableCell>
+              <TableCell colSpan="4" align='center'>2018</TableCell>
+              <TableCell colSpan="4" align='center'>2019</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>region</TableCell>
               <TableCell>xx</TableCell>
               <TableCell>yy</TableCell>
               <TableCell>zz</TableCell>
+              <TableCell>ww</TableCell>
 
               <TableCell>xx</TableCell>
               <TableCell>yy</TableCell>
               <TableCell>zz</TableCell>
+              <TableCell>ww</TableCell>
+
 
               <TableCell>xx</TableCell>
               <TableCell>yy</TableCell>
               <TableCell>zz</TableCell>
+              <TableCell>ww</TableCell>
             </TableRow>
           </TableHead>
           <TableBody onClick={handleClick}>
@@ -54,26 +82,31 @@ const MainTable = () => {
                 return (
                   <>
                     <TableRow>
-                      <TableCell>Kyivska</TableCell>
+                      <TableCell component="th">Kyivska</TableCell>
                       <TableCell>{item.Kyivska.G['2017'].XX.value}</TableCell>
                       <TableCell>{item.Kyivska.G['2017'].YY.value}</TableCell>
                       <TableCell>{item.Kyivska.G['2017'].ZZ.value}</TableCell>
+                      <TableCell>{item.Kyivska.G['2017'].ZZ.value * item.Kyivska.G['2017'].YY.value}</TableCell>
                         
                       <TableCell>{item.Kyivska.G['2018'].XX.value}</TableCell>
                       <TableCell>{item.Kyivska.G['2018'].YY.value}</TableCell>
                       <TableCell>{item.Kyivska.G['2018'].ZZ.value}</TableCell>
+                      <TableCell>{item.Kyivska.G['2018'].ZZ.value * item.Kyivska.G['2018'].YY.value}</TableCell>
 
                       <TableCell>{item.Kyivska.G['2019'].XX.value}</TableCell>
                       <TableCell>{item.Kyivska.G['2019'].YY.value}</TableCell>
                       <TableCell>{item.Kyivska.G['2019'].ZZ.value}</TableCell>
+                      <TableCell>{item.Kyivska.G['2019'].ZZ.value * item.Kyivska.G['2019'].YY.value}</TableCell>
                     </TableRow>
                     
-                    <TableRow>
-                      <TableCell>Odeska</TableCell>
+                    <TableRow >
+                      <TableCell component="th">Odeska</TableCell>
                       <TableCell>{item.Odeska.G['2017'].XX.value}</TableCell>
                       <TableCell>{item.Odeska.G['2017'].YY.value}</TableCell>
                       <TableCell>{item.Odeska.G['2017'].ZZ.value}</TableCell>
+                      <TableCell>{item.Odeska.G['2017'].ZZ.value * item.Odeska.G['2017'].YY.value}</TableCell>
                         
+                      <TableCell></TableCell>
                       <TableCell></TableCell>
                       <TableCell></TableCell>
                       <TableCell></TableCell>
@@ -81,23 +114,26 @@ const MainTable = () => {
                       <TableCell>{item.Odeska.G['2019'].XX.value}</TableCell>
                       <TableCell>{item.Odeska.G['2019'].YY.value}</TableCell>
                       <TableCell>{item.Odeska.G['2019'].ZZ.value}</TableCell>
+                      <TableCell>{item.Odeska.G['2019'].ZZ.value * item.Odeska.G['2019'].YY.value}</TableCell>
                     </TableRow>
                       
-                    <TableRow>
-                      <TableCell>Lvivska</TableCell>
+                    <TableRow >
+                      <TableCell component="th">Lvivska</TableCell>
                       <TableCell>{item.Lvivska.G['2017'].XX.value}</TableCell>
                       <TableCell>{item.Lvivska.G['2017'].YY.value}</TableCell>
                       <TableCell>{item.Lvivska.G['2017'].ZZ.value}</TableCell>
+                      <TableCell>{item.Lvivska.G['2017'].ZZ.value * item.Lvivska.G['2017'].YY.value}</TableCell>
 
                       <TableCell>{item.Lvivska.G['2018'].XX.value}</TableCell>
                       <TableCell>{item.Lvivska.G['2018'].YY.value}</TableCell>
                       <TableCell>{item.Lvivska.G['2018'].ZZ.value}</TableCell>
-                        
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
+                      <TableCell>{item.Lvivska.G['2018'].ZZ.value * item.Lvivska.G['2018'].YY.value}</TableCell>
                     
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>
+                      <TableCell></TableCell>                      
+                    </TableRow>                      
                   </>
                 )
               })

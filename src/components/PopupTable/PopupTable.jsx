@@ -1,5 +1,5 @@
 import './PopupTable.css';
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 
 function createData(value, date, user, comment) {
   return { value, date, user, comment };
@@ -18,10 +19,8 @@ const rowss = [
   createData(3, '07/15/2022', 'Anna', "Hello")
 ];
 
-
-
 const PopupTable = () => {
-
+  
   const [rows, setRows] = useState(rowss)
   const [value, setValue] = useState(0);
   const [date, setDate] = useState(new Date(Date.now()).toLocaleString().split(',')[0]);
@@ -46,7 +45,8 @@ const PopupTable = () => {
   
 
   const handleClickAdd = () => {
-    setRows(prevState => [...prevState, { value, date, user, comment }]);
+    setRows(prevState => [...prevState, { value, date, user, comment }]);     
+    window.opener.parent.postMessage({value, date, user, comment}, '*')
     setValue(0);
     setDate(new Date(Date.now()).toLocaleString().split(',')[0]);
     setUser('Jack');
