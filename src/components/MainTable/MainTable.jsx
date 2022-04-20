@@ -26,9 +26,16 @@ const MainTable = () => {
     }
 
     const { value, date, user, comment } = receivedData;
+
+    if (value === undefined && date === undefined && user === undefined && comment === undefined) {
+      return
+    }
+
     if (cell) {
       cell.innerText = `${value} ${date} ${user} ${comment}`
     }
+
+    setReceivedData(null)
     
   }, [cell, receivedData])
   
